@@ -58,7 +58,7 @@ function resolve(toResolve, guild) {
         const resolved = Resolver.member(guild, toResolve.resolved.id);
         return resolved 
             ? resolved.mention
-            : `${toResolve.resolved.username}#${toResolve.resolved.discriminator}`;
+            : toResolve.resolved.username;
     }
 
     if (toResolve.type === 2) { // role
@@ -217,6 +217,10 @@ bot.on('messageCreate', msg => {
     }
 
     if (cur.ignore) { // ignore channels if needed
+        return;
+    }
+
+    if (cur.role && msg.author.id != cur.role) {
         return;
     }
 
