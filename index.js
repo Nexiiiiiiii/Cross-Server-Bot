@@ -127,7 +127,7 @@ function extractMention(match, guild) {
 
         return enhancedMention.user 
             ? { type: 1, resolved }
-            : `\@${resolved.username}#${resolved.discriminator}`;
+            : resolved.username;
     }
 
     if (type === '@&') { // role mention
@@ -220,7 +220,7 @@ bot.on('messageCreate', msg => {
         return;
     }
 
-    if (cur.role && !msg.member.roles.includes(cur.role)) {
+    if (cur.role && msg.member.roles.includes(cur.role)) {
         return;
     }
 
@@ -257,8 +257,8 @@ bot.on('messageUpdate', (msg, oldMsg) => {
     if (!cur || msg.channel.id != cur.channelID) {
         return;
     }
-    
-    if (cur.role && !msg.member.roles.includes(cur.role)) {
+
+    if (cur.role && msg.member.roles.includes(cur.role)) {
         return;
     }
 
