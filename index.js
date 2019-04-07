@@ -220,7 +220,7 @@ bot.on('messageCreate', msg => {
         return;
     }
 
-    if (cur.role && msg.author.id != cur.role) {
+    if (cur.role && !msg.member.roles.includes(cur.role)) {
         return;
     }
 
@@ -255,6 +255,10 @@ bot.on('messageUpdate', (msg, oldMsg) => {
 
     const cur = network[msg.channel.id]
     if (!cur || msg.channel.id != cur.channelID) {
+        return;
+    }
+    
+    if (cur.role && !msg.member.roles.includes(cur.role)) {
         return;
     }
 
